@@ -13,7 +13,6 @@ import java.util.List;
 
 public class DuelAssistantManagement implements OnClipChangedListener {
     private static final DuelAssistantManagement ourInstance = new DuelAssistantManagement();
-    private Context context;
     private List<OnDuelAssistantListener> onDuelAssistantListenerList;
     private ClipManagement clipManagement;
     //卡查内容
@@ -29,9 +28,8 @@ public class DuelAssistantManagement implements OnClipChangedListener {
     }
 
     public void init(Context context) {
-        this.context = context;
         //初始化剪贴板监听
-        initClipListener();
+        initClipListener(context);
     }
 
     public void addDuelAssistantListener(OnDuelAssistantListener onDuelAssistantListener) {
@@ -47,7 +45,7 @@ public class DuelAssistantManagement implements OnClipChangedListener {
         return onDuelAssistantListenerList;
     }
 
-    private void initClipListener() {
+    private void initClipListener(Context context) {
         clipManagement = ClipManagement.getInstance();
         clipManagement.startClipboardListener(context);
         clipManagement.setOnClipChangedListener(this);
@@ -55,7 +53,6 @@ public class DuelAssistantManagement implements OnClipChangedListener {
 
 
     public void clear() {
-        context = null;
         lastMessage = "";
         cardSearchMessage = "";
         onDuelAssistantListenerList.clear();
