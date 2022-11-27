@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_DuelAssistant">复制约战房间号直接加房
+        \n复制卡组文本直接保存为卡组并在卡组编辑打开它</string>
+    <string name="DuelAssistant">决斗助手启用中</string>
+    <string name="find_deck_text">检测到卡组文本，是否保存？</string>
+    <string name="save_open">保存并打开</string>
+    <string name="close">关闭</string>
+    <string name="quick_join">加入房间</string>
+    <string name="join">加入</string>
+    <string name="join_game">进入游戏</string>
+</resources>
