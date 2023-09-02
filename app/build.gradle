@@ -9,9 +9,9 @@ android {
     defaultConfig {
         applicationId "com.ourygo.lib.duelassistant.test"
         minSdk 21
-        targetSdk 21
+        targetSdk 26
         versionCode 1
-        versionName "1.0.4"
+        versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
