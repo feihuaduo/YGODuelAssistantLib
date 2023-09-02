@@ -35,6 +35,7 @@ public class DADeckUtil {
     //协议0数量分隔符
     private static final String CARD_DIVIDE_NUM = "*";
 
+    private static final int DECK_TYPE_UNKNOWN = -1;
     private static final int DECK_TYPE_MAIN = 0;
     private static final int DECK_TYPE_EX = 1;
     private static final int DECK_TYPE_SIDE = 2;
@@ -45,7 +46,7 @@ public class DADeckUtil {
         extraList = new ArrayList<>();
         sideList = new ArrayList<>();
         String[] info = deckFileMessage.split("\n");
-        int type = -1;
+        int type = DECK_TYPE_UNKNOWN;
         for (String line : info) {
             if (line.startsWith("!side")) {
                 type = DECK_TYPE_SIDE;
@@ -58,6 +59,9 @@ public class DADeckUtil {
                     type = DECK_TYPE_EX;
                 }
                 continue;
+            }
+            if (type == DECK_TYPE_UNKNOWN) {
+                type = DECK_TYPE_MAIN;
             }
             line = line.trim();
             if (line.length() == 0 || !TextUtils.isDigitsOnly(line)) {
