@@ -181,11 +181,7 @@ public class DuelAssistantService extends Service implements OnDuelAssistantList
             Class<?> clazz = statusBarManager.getClass();
 
             Method methodCollapse;
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-                methodCollapse = clazz.getMethod("collapse");
-            } else {
-                methodCollapse = clazz.getMethod("collapsePanels");
-            }
+            methodCollapse = clazz.getMethod("collapsePanels");
             methodCollapse.invoke(statusBarManager);
         } catch (Exception e) {
             e.printStackTrace();
