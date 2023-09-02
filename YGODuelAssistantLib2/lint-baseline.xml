@@ -1,94 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues name="AGP (7.3.1)" by="lint 7.3.1" client="gradle" dependencies="false" format="6"
-    type="baseline" variant="all" version="7.3.1">
+<issues format="6" by="lint 8.1.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.1.1)" variant="all" version="8.1.1">
 
-    <issue errorLine1="        mFloatLayout = LayoutInflater.from(this).inflate(R.layout.duel_assistant_service, null);"
-        errorLine2="                                                                                          ~~~~"
+    <issue
         id="InflateParams"
-        message="Avoid passing `null` as the view root (needed to resolve layout parameters on the inflated layout&apos;s root element)">
+        message="Avoid passing `null` as the view root (needed to resolve layout parameters on the inflated layout&apos;s root element)"
+        errorLine1="        mFloatLayout = LayoutInflater.from(this).inflate(R.layout.duel_assistant_service, null);"
+        errorLine2="                                                                                          ~~~~">
         <location
-            column="91"
-            file="src/main/java/com/ourygo/lib/duelassistant/service/DuelAssistantService.java" line="350" />
+            file="src/main/java/com/ourygo/lib/duelassistant/service/DuelAssistantService.java"
+            line="349"
+            column="91"/>
     </issue>
 
-    <issue errorLine1="                pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);" errorLine2="                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        id="UnspecifiedImmutableFlag"
-        message="Missing `PendingIntent` mutability flag">
+    <issue
+        id="ExpiredTargetSdkVersion"
+        message="Google Play requires that apps target API level 31 or higher.&#xA;"
+        errorLine1="        targetSdk 21"
+        errorLine2="        ~~~~~~~~~~~~">
         <location
-            column="75"
-            file="src/main/java/com/ourygo/lib/duelassistant/service/DuelAssistantService.java" line="111" />
+            file="build.gradle"
+            line="12"
+            column="9"/>
     </issue>
 
-    <issue errorLine1="                pendingIntent = PendingIntent.getService(this, 2, intent, PendingIntent.FLAG_UPDATE_CURRENT);" errorLine2="                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        id="UnspecifiedImmutableFlag"
-        message="Missing `PendingIntent` mutability flag">
-        <location
-            column="75"
-            file="src/main/java/com/ourygo/lib/duelassistant/service/DuelAssistantService.java" line="115" />
-    </issue>
-
-    <issue errorLine1="        targetSdk 21"
-        errorLine2="        ~~~~~~~~~~~~"
-        id="ExpiredTargetSdkVersion" message="Google Play requires that apps target API level 31 or higher.&#xA;">
-        <location column="9" file="build.gradle" line="12" />
-    </issue>
-
-    <issue errorLine1="            if (Build.VERSION.SDK_INT &lt;= Build.VERSION_CODES.JELLY_BEAN) {" errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    <issue
         id="ObsoleteSdkInt"
-        message="Unnecessary; SDK_INT is never &lt; 21">
+        message="Unnecessary; SDK_INT is never &lt; 21"
+        errorLine1="            if (Build.VERSION.SDK_INT &lt;= Build.VERSION_CODES.JELLY_BEAN) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            column="17"
-            file="src/main/java/com/ourygo/lib/duelassistant/service/DuelAssistantService.java" line="185" />
+            file="src/main/java/com/ourygo/lib/duelassistant/service/DuelAssistantService.java"
+            line="184"
+            column="17"/>
     </issue>
 
-    <issue errorLine1="    private static final DuelAssistantManagement ourInstance = new DuelAssistantManagement();"
-        errorLine2="            ~~~~~~"
-        id="StaticFieldLeak"
-        message="Do not place Android context classes in static fields (static reference to `DuelAssistantManagement` which has field `context` pointing to `Context`); this is a memory leak">
-        <location
-            column="13"
-            file="src/main/java/com/ourygo/lib/duelassistant/util/DuelAssistantManagement.java" line="15" />
-    </issue>
-
-    <issue errorLine1="        android:layout_width=&quot;match_parent&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    <issue
         id="InefficientWeight"
-        message="Use a `layout_width` of `0dp` instead of `match_parent` for better performance">
-        <location column="9" file="src/main/res/layout/notification_view_duel_assistant.xml"
-            line="15" />
+        message="Use a `layout_width` of `0dp` instead of `match_parent` for better performance"
+        errorLine1="        android:layout_width=&quot;match_parent&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/notification_view_duel_assistant.xml"
+            line="15"
+            column="9"/>
     </issue>
 
-    <issue errorLine1="    android:background=&quot;#00FFFFFF&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    <issue
         id="Overdraw"
-        message="Possible overdraw: Root element paints background `#00FFFFFF` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)">
-        <location column="5" file="src/main/res/layout/duel_assistant_service.xml" line="5" />
+        message="Possible overdraw: Root element paints background `#00FFFFFF` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
+        errorLine1="    android:background=&quot;#00FFFFFF&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/duel_assistant_service.xml"
+            line="5"
+            column="5"/>
     </issue>
 
-    <issue errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^"
-        id="UnusedResources"
-        message="The resource `R.drawable.radius_background` appears to be unused">
-        <location column="1" file="src/main/res/drawable/radius_background.xml" line="2" />
-    </issue>
-
-    <issue errorLine1="            android:textSize=&quot;10sp&quot; />" errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~"
+    <issue
         id="SmallSp"
-        message="Avoid using sizes smaller than `11sp`: `10sp`">
-        <location column="13" file="src/main/res/layout/notification_view_duel_assistant.xml"
-            line="35" />
+        message="Avoid using sizes smaller than `11sp`: `10sp`"
+        errorLine1="            android:textSize=&quot;10sp&quot; />"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/notification_view_duel_assistant.xml"
+            line="35"
+            column="13"/>
     </issue>
 
-    <issue errorLine1="    &lt;ImageView" errorLine2="     ~~~~~~~~~"
-        id="ContentDescription" message="Missing `contentDescription` attribute on image">
-        <location column="6" file="src/main/res/layout/notification_view_duel_assistant.xml"
-            line="7" />
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/notification_view_duel_assistant.xml"
+            line="7"
+            column="6"/>
     </issue>
 
-    <issue errorLine1="        android:text=&quot;Text&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~"
-        id="HardcodedText" message="Hardcoded string &quot;Text&quot;, should use `@string` resource">
-        <location column="9" file="src/main/res/layout/duel_assistant_service.xml" line="13" />
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Text&quot;, should use `@string` resource"
+        errorLine1="        android:text=&quot;Text&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/duel_assistant_service.xml"
+            line="13"
+            column="9"/>
     </issue>
 
 </issues>
