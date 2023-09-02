@@ -22,6 +22,6 @@ Step 2. Add the dependency
 dependencies {
 
     //依赖
-    implementation 'com.github.feihuaduo:YGODuelAssistantLib:1.0.1'
+    implementation 'com.github.feihuaduo:YGODuelAssistantLib:1.0.2'
 }
 ```
