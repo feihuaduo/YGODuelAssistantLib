@@ -207,8 +207,10 @@ public class DADeckUtil {
                             mainlist.add(cardId);
                         }
                     }
-                    if (!isCompleteDeck)
+                    if (!isCompleteDeck) {
+                        onDeDeckListener.onDeDeck(uri, mainlist, extraList, sideList, isCompleteDeck, deckException);
                         return;
+                    }
                     if (bits.length < (16 + mNum * 29 + (eNum * 29))) {
                         eNum = (bits.length - 16 - (mNum * 29)) / 29;
                         isCompleteDeck = false;
@@ -223,8 +225,10 @@ public class DADeckUtil {
                         }
                     }
 
-                    if (!isCompleteDeck)
+                    if (!isCompleteDeck) {
+                        onDeDeckListener.onDeDeck(uri, mainlist, extraList, sideList, isCompleteDeck, deckException);
                         return;
+                    }
                     if (bits.length < (16 + mNum * 29 + (eNum * 29) + (sNum * 29))) {
                         sNum = (bits.length - 16 - (mNum * 29) - (eNum * 29)) / 29;
                         isCompleteDeck = false;
