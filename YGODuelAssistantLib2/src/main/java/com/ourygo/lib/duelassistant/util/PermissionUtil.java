@@ -15,8 +15,7 @@ public class PermissionUtil {
     //判断是否有悬浮窗权限
     public static boolean isServicePermission(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(context))
-                return false;
+            return Settings.canDrawOverlays(context);
         }
         return true;
     }

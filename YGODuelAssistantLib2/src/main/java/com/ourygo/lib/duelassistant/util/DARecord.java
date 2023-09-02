@@ -5,12 +5,12 @@ public class DARecord {
     //卡查关键字
     public static final String[] CARD_SEARCH_KEY = new String[]{"?", "？"};
 
-    public static final int YGO_ROOM_PROTOCOL_1=1;
+    public static final int YGO_ROOM_PROTOCOL_1 = 1;
 
     //加房关键字
     public static final String[] PASSWORD_PREFIX = {
             "M,", "m,",
-            "T,","t,",
+            "T,", "t,",
             "PR,", "pr,",
             "AI,", "ai,",
             "LF2,", "lf2,",
@@ -24,9 +24,9 @@ public class DARecord {
             "R#", "r#"
     };
 
-    public static final String ROOM_PREFIX="room:{";
+    public static final String ROOM_PREFIX = "room:{";
 
-    public static final String ROOM_END="}";
+    public static final String ROOM_END = "}";
 
     //卡组复制
     public static final String[] DeckTextKey = new String[]{"#main"};
@@ -37,8 +37,8 @@ public class DARecord {
     public static final String HTTP_URL_PREFIX = "http://";
     public static final String HTTPS_URL_PREFIX = "https://";
 
-    public static final String URL_SCHEME_HTTP="http";
-    public static final String URL_SCHEME_HTTPS="https";
+    public static final String URL_SCHEME_HTTP = "http";
+    public static final String URL_SCHEME_HTTPS = "https";
 
     public static final String URL_HOST_DECK = "deck.ourygo.top";
 
@@ -48,9 +48,9 @@ public class DARecord {
     public static final String ARG_PORT_ALL = "port";
     public static final String ARG_HOST_ALL = "host";
     public static final String ARG_PASSWORD_ALL = "password";
-    public static final String ARG_YGO_TYPE="ygotype";
-    public static final String ARG_DECK="deck";
-    public static final String ARG_ROOM="room";
+    public static final String ARG_YGO_TYPE = "ygotype";
+    public static final String ARG_DECK = "deck";
+    public static final String ARG_ROOM = "room";
 
     public static final String QUERY_VERSION = "v";
 

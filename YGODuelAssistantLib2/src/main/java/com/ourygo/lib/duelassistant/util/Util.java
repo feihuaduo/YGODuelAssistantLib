@@ -20,6 +20,7 @@ public class Util {
 
     /**
      * 开启悬浮窗提醒，没写好，暂时没用
+     *
      * @param context
      * @return
      */
@@ -38,7 +39,7 @@ public class Util {
         return true;
     }
 
-    public static Intent getNotificationPermissionInitent(Context context){
+    public static Intent getNotificationPermissionInitent(Context context) {
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", context.getPackageName(), null);
@@ -46,9 +47,9 @@ public class Util {
         return intent;
     }
 
-    public static Intent getServicePermissionIntent(Context context){
+    public static Intent getServicePermissionIntent(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:"+context.getPackageName()));
+            return new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + context.getPackageName()));
         }
         return null;
     }
@@ -88,16 +89,10 @@ public class Util {
     public static boolean isContextExisted(Context context) {
         if (context != null) {
             if (context instanceof Activity) {
-                if (!((Activity)context).isFinishing()) {
-                    return true;
-                }
+                return !((Activity) context).isFinishing();
             } else if (context instanceof Service) {
-                if (isServiceExisted(context, context.getClass().getName())) {
-                    return true;
-                }
-            } else if (context instanceof Application) {
-                return true;
-            }
+                return isServiceExisted(context, context.getClass().getName());
+            } else return context instanceof Application;
         }
         return false;
     }

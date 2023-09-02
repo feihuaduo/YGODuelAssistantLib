@@ -5,5 +5,5 @@ package com.ourygo.lib.duelassistant.listener;
  * 解析房间监听
  */
 public interface OnDeRoomListener {
-    void onDeRoom(String host,int port,String password,String exception);
+    void onDeRoom(String host, int port, String password, String exception);
 }

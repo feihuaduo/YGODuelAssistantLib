@@ -19,8 +19,9 @@ public class YGODAUtil {
 
     /**
      * 解析卡组协议
-     * @param message 识别的文本
-     * @param isUri 是否是uri
+     *
+     * @param message          识别的文本
+     * @param isUri            是否是uri
      * @param onDeDeckListener 监听回调
      */
     public static void deDeckListener(String message, boolean isUri, OnDeDeckListener onDeDeckListener) {
@@ -32,7 +33,8 @@ public class YGODAUtil {
 
     /**
      * 根据卡组文件文本内容解析卡组协议
-     * @param deckFileMessage 卡组文件文本内容
+     *
+     * @param deckFileMessage  卡组文件文本内容
      * @param onDeDeckListener 监听回调
      */
     public static void deDeckListener(String deckFileMessage, OnDeDeckListener onDeDeckListener) {
@@ -41,7 +43,8 @@ public class YGODAUtil {
 
     /**
      * 根据uri解析卡组协议
-     * @param uri 识别的uri
+     *
+     * @param uri              识别的uri
      * @param onDeDeckListener 监听回调
      */
     public static void deDeckListener(Uri uri, OnDeDeckListener onDeDeckListener) {
@@ -50,9 +53,10 @@ public class YGODAUtil {
 
     /**
      * 卡组转uri
-     * @param mainList 主卡组卡密
-     * @param exList 额外卡组卡密
-     * @param sideList 副卡组卡密
+     *
+     * @param mainList  主卡组卡密
+     * @param exList    额外卡组卡密
+     * @param sideList  副卡组卡密
      * @param parameter uri自定义参数，没有可以为空
      * @return 转换后的uri
      */
@@ -62,21 +66,23 @@ public class YGODAUtil {
 
     /**
      * 卡组转uri
-     * @param scheme 协议
-     * @param host 主机
-     * @param mainList 主卡组卡密
-     * @param exList 额外卡组卡密
-     * @param sideList 副卡组卡密
+     *
+     * @param scheme    协议
+     * @param host      主机
+     * @param mainList  主卡组卡密
+     * @param exList    额外卡组卡密
+     * @param sideList  副卡组卡密
      * @param parameter uri自定义参数，没有可以为空
      * @return 转换后的uri
      */
-    public static Uri toUri(String scheme,String host,List<Integer> mainList,List<Integer> exList,List<Integer> sideList,Map<String,String> parameter) {
+    public static Uri toUri(String scheme, String host, List<Integer> mainList, List<Integer> exList, List<Integer> sideList, Map<String, String> parameter) {
         return DADeckUtil.toUri(scheme, host, mainList, exList, sideList, parameter);
     }
 
     /**
      * 根据uri解析房间
-     * @param uri 识别的uri
+     *
+     * @param uri              识别的uri
      * @param onDeRoomListener 监听回调
      */
     public static void deRoomListener(Uri uri, OnDeRoomListener onDeRoomListener) {

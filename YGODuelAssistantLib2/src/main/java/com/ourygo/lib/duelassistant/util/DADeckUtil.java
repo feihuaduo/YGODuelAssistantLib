@@ -35,18 +35,18 @@ public class DADeckUtil {
     //协议0数量分隔符
     private static final String CARD_DIVIDE_NUM = "*";
 
-    private static final int DECK_TYPE_MAIN=0;
-    private static final int DECK_TYPE_EX=1;
-    private static final int DECK_TYPE_SIDE=2;
+    private static final int DECK_TYPE_MAIN = 0;
+    private static final int DECK_TYPE_EX = 1;
+    private static final int DECK_TYPE_SIDE = 2;
 
-    protected static void deDeckListener(String deckFileMessage, OnDeDeckListener onDeDeckListener){
-        List<Integer> mainlist,extraList,sideList;
+    protected static void deDeckListener(String deckFileMessage, OnDeDeckListener onDeDeckListener) {
+        List<Integer> mainlist, extraList, sideList;
         mainlist = new ArrayList<>();
         extraList = new ArrayList<>();
         sideList = new ArrayList<>();
-        String[] info=deckFileMessage.split("\n");
-        int type=-1;
-        for (String line:info) {
+        String[] info = deckFileMessage.split("\n");
+        int type = -1;
+        for (String line : info) {
             if (line.startsWith("!side")) {
                 type = DECK_TYPE_SIDE;
                 continue;
@@ -75,11 +75,11 @@ public class DADeckUtil {
                 sideList.add(id);
             }
         }
-        onDeDeckListener.onDeDeck(null,mainlist,extraList,sideList,false,null);
+        onDeDeckListener.onDeDeck(null, mainlist, extraList, sideList, false, null);
     }
 
     protected static void deDeckListener(Uri uri, OnDeDeckListener onDeDeckListener) {
-        List<Integer> mainlist,extraList,sideList;
+        List<Integer> mainlist, extraList, sideList;
         String deckException = null;
         mainlist = new ArrayList<>();
         extraList = new ArrayList<>();
@@ -105,150 +105,150 @@ public class DADeckUtil {
         String[] mains, extras, sides;
         try {
 
-            URL url ;
-        switch (version) {
-            case YGO_DECK_PROTOCOL_0:
-                main = uri.getQueryParameter(QUERY_MAIN_ALL);
-                extra = uri.getQueryParameter(QUERY_EXTRA_ALL);
-                side = uri.getQueryParameter(QUERY_SIDE_ALL);
+            URL url;
+            switch (version) {
+                case YGO_DECK_PROTOCOL_0:
+                    main = uri.getQueryParameter(QUERY_MAIN_ALL);
+                    extra = uri.getQueryParameter(QUERY_EXTRA_ALL);
+                    side = uri.getQueryParameter(QUERY_SIDE_ALL);
 
-                mains = main.split(CARD_DIVIDE_ID);
-                mList.addAll(Arrays.asList(mains));
+                    mains = main.split(CARD_DIVIDE_ID);
+                    mList.addAll(Arrays.asList(mains));
 
-                extras = extra.split(CARD_DIVIDE_ID);
-                eList.addAll(Arrays.asList(extras));
+                    extras = extra.split(CARD_DIVIDE_ID);
+                    eList.addAll(Arrays.asList(extras));
 
-                sides = side.split(CARD_DIVIDE_ID);
-                sList.addAll(Arrays.asList(sides));
+                    sides = side.split(CARD_DIVIDE_ID);
+                    sList.addAll(Arrays.asList(sides));
 
-                for (String m : mList) {
-                    int[] idNum = toIdAndNum(m, version);
-                    if (idNum[0] > 0) {
-                        for (int i = 0; i < idNum[1]; i++) {
-                            mainlist.add(idNum[0]);
+                    for (String m : mList) {
+                        int[] idNum = toIdAndNum(m, version);
+                        if (idNum[0] > 0) {
+                            for (int i = 0; i < idNum[1]; i++) {
+                                mainlist.add(idNum[0]);
+                            }
                         }
                     }
-                }
 
-                for (String m : eList) {
-                    int[] idNum = toIdAndNum(m, version);
-                    if (idNum[0] > 0) {
-                        for (int i = 0; i < idNum[1]; i++) {
-                            extraList.add(idNum[0]);
+                    for (String m : eList) {
+                        int[] idNum = toIdAndNum(m, version);
+                        if (idNum[0] > 0) {
+                            for (int i = 0; i < idNum[1]; i++) {
+                                extraList.add(idNum[0]);
+                            }
                         }
                     }
-                }
 
-                for (String m : sList) {
-                    int[] idNum = toIdAndNum(m, version);
-                    if (idNum[0] > 0) {
-                        for (int i = 0; i < idNum[1]; i++) {
-                            sideList.add(idNum[0]);
+                    for (String m : sList) {
+                        int[] idNum = toIdAndNum(m, version);
+                        if (idNum[0] > 0) {
+                            for (int i = 0; i < idNum[1]; i++) {
+                                sideList.add(idNum[0]);
+                            }
                         }
                     }
-                }
 
-                break;
-            case YGO_DECK_PROTOCOL_1:
-            default:
-                String deck = uri.getQueryParameter(QUERY_DECK);
-                if (TextUtils.isEmpty(deck))
-                    return;
-                int end = deck.indexOf(" ");
-                if (end != -1) {
-                    deck = deck.substring(0, end);
-                }
-                end = deck.indexOf("\n");
-                if (end != -1) {
-                    deck = deck.substring(0, end);
-                }
-                deck = deck.replace("-", "+");
-                deck = deck.replace("_", "/");
-                byte[] bytes = Base64.decode(deck, Base64.NO_WRAP);
-                Log.e("Deck", deck.length() + "字符位数" + bytes.length);
-                String[] bits = new String[bytes.length * 8];
-
-                for (int i = 0; i < bytes.length; i++) {
-
-                    String b = Integer.toBinaryString(bytes[i]);
-
-                    b = toNumLength(b, 8);
-                    if (b.length() > 8)
-                        b = b.substring(b.length() - 8);
-                    if (i < 8)
-                        Log.e("Deck", b + "  byte：" + bytes[i]);
-                    for (int x = 0; x < 8; x++)
-                        bits[i * 8 + x] = b.substring(x, x + 1);
-                }
-                bits = toNumLength(bits, 16);
-
-
-                int mNum = Integer.valueOf(getArrayString(bits, 0, 8), 2);
-                int eNum = Integer.valueOf(getArrayString(bits, 8, 12), 2);
-                int sNum = Integer.valueOf(getArrayString(bits, 12, 16), 2);
-
-                Log.e("Deck", "种类数量" + mNum + " " + eNum + " " + sNum + " ");
-                Log.e("Deck", "m：" + getArrayString(bits, 0, 8));
-                Log.e("Deck", "e：" + getArrayString(bits, 8, 12));
-                Log.e("Deck", "s：" + getArrayString(bits, 12, 16));
-                if (bits.length < (16 + (mNum * 29))) {
-                    mNum = (bits.length - 16) / 29;
-                    isCompleteDeck = false;
-                }
-                for (int i = 0; i < mNum; i++) {
-                    int cStart = 16 + (i * 29);
-                    int cardNum = Integer.valueOf(getArrayString(bits, cStart, cStart + 2), 2);
-                    int cardId = Integer.valueOf(getArrayString(bits, cStart + 2, cStart + 29), 2);
-                    for (int x = 0; x < cardNum; x++) {
-                        mainlist.add(cardId);
+                    break;
+                case YGO_DECK_PROTOCOL_1:
+                default:
+                    String deck = uri.getQueryParameter(QUERY_DECK);
+                    if (TextUtils.isEmpty(deck))
+                        return;
+                    int end = deck.indexOf(" ");
+                    if (end != -1) {
+                        deck = deck.substring(0, end);
                     }
-                }
-                if (!isCompleteDeck)
-                    return;
-                if (bits.length < (16 + mNum * 29 + (eNum * 29))) {
-                    eNum = (bits.length - 16 - (mNum * 29)) / 29;
-                    isCompleteDeck = false;
-                }
-                for (int i = 0; i < eNum; i++) {
-                    int cStart = 16 + mNum * 29 + (i * 29);
-                    int cardNum = Integer.valueOf(getArrayString(bits, cStart, cStart + 2), 2);
-                    Log.e("DeckSetting", eNum + " 当前 " + i + "  " + cStart);
-                    int cardId = Integer.valueOf(getArrayString(bits, cStart + 2, cStart + 29), 2);
-                    for (int x = 0; x < cardNum; x++) {
-                        extraList.add(cardId);
+                    end = deck.indexOf("\n");
+                    if (end != -1) {
+                        deck = deck.substring(0, end);
                     }
-                }
+                    deck = deck.replace("-", "+");
+                    deck = deck.replace("_", "/");
+                    byte[] bytes = Base64.decode(deck, Base64.NO_WRAP);
+                    Log.e("Deck", deck.length() + "字符位数" + bytes.length);
+                    String[] bits = new String[bytes.length * 8];
 
-                if (!isCompleteDeck)
-                    return;
-                if (bits.length < (16 + mNum * 29 + (eNum * 29) + (sNum * 29))) {
-                    sNum = (bits.length - 16 - (mNum * 29) - (eNum * 29)) / 29;
-                    isCompleteDeck = false;
-                }
-                for (int i = 0; i < sNum; i++) {
-                    int cStart = 16 + mNum * 29 + eNum * 29 + (i * 29);
-                    int cardNum = Integer.valueOf(getArrayString(bits, cStart, cStart + 2), 2);
-                    int cardId = Integer.valueOf(getArrayString(bits, cStart + 2, cStart + 29), 2);
-                    for (int x = 0; x < cardNum; x++) {
-                        sideList.add(cardId);
+                    for (int i = 0; i < bytes.length; i++) {
+
+                        String b = Integer.toBinaryString(bytes[i]);
+
+                        b = toNumLength(b, 8);
+                        if (b.length() > 8)
+                            b = b.substring(b.length() - 8);
+                        if (i < 8)
+                            Log.e("Deck", b + "  byte：" + bytes[i]);
+                        for (int x = 0; x < 8; x++)
+                            bits[i * 8 + x] = b.substring(x, x + 1);
                     }
-                }
-                break;
-        }
+                    bits = toNumLength(bits, 16);
+
+
+                    int mNum = Integer.valueOf(getArrayString(bits, 0, 8), 2);
+                    int eNum = Integer.valueOf(getArrayString(bits, 8, 12), 2);
+                    int sNum = Integer.valueOf(getArrayString(bits, 12, 16), 2);
+
+                    Log.e("Deck", "种类数量" + mNum + " " + eNum + " " + sNum + " ");
+                    Log.e("Deck", "m：" + getArrayString(bits, 0, 8));
+                    Log.e("Deck", "e：" + getArrayString(bits, 8, 12));
+                    Log.e("Deck", "s：" + getArrayString(bits, 12, 16));
+                    if (bits.length < (16 + (mNum * 29))) {
+                        mNum = (bits.length - 16) / 29;
+                        isCompleteDeck = false;
+                    }
+                    for (int i = 0; i < mNum; i++) {
+                        int cStart = 16 + (i * 29);
+                        int cardNum = Integer.valueOf(getArrayString(bits, cStart, cStart + 2), 2);
+                        int cardId = Integer.valueOf(getArrayString(bits, cStart + 2, cStart + 29), 2);
+                        for (int x = 0; x < cardNum; x++) {
+                            mainlist.add(cardId);
+                        }
+                    }
+                    if (!isCompleteDeck)
+                        return;
+                    if (bits.length < (16 + mNum * 29 + (eNum * 29))) {
+                        eNum = (bits.length - 16 - (mNum * 29)) / 29;
+                        isCompleteDeck = false;
+                    }
+                    for (int i = 0; i < eNum; i++) {
+                        int cStart = 16 + mNum * 29 + (i * 29);
+                        int cardNum = Integer.valueOf(getArrayString(bits, cStart, cStart + 2), 2);
+                        Log.e("DeckSetting", eNum + " 当前 " + i + "  " + cStart);
+                        int cardId = Integer.valueOf(getArrayString(bits, cStart + 2, cStart + 29), 2);
+                        for (int x = 0; x < cardNum; x++) {
+                            extraList.add(cardId);
+                        }
+                    }
+
+                    if (!isCompleteDeck)
+                        return;
+                    if (bits.length < (16 + mNum * 29 + (eNum * 29) + (sNum * 29))) {
+                        sNum = (bits.length - 16 - (mNum * 29) - (eNum * 29)) / 29;
+                        isCompleteDeck = false;
+                    }
+                    for (int i = 0; i < sNum; i++) {
+                        int cStart = 16 + mNum * 29 + eNum * 29 + (i * 29);
+                        int cardNum = Integer.valueOf(getArrayString(bits, cStart, cStart + 2), 2);
+                        int cardId = Integer.valueOf(getArrayString(bits, cStart + 2, cStart + 29), 2);
+                        for (int x = 0; x < cardNum; x++) {
+                            sideList.add(cardId);
+                        }
+                    }
+                    break;
+            }
         } catch (Exception exception) {
-            deckException=exception.toString();
+            deckException = exception.toString();
         }
-        onDeDeckListener.onDeDeck(uri,mainlist,extraList,sideList,isCompleteDeck,deckException);
+        onDeDeckListener.onDeDeck(uri, mainlist, extraList, sideList, isCompleteDeck, deckException);
     }
 
-    protected static Uri toUri(String scheme, String host, List<Integer> mainList, List<Integer> exList, List<Integer> sideList, Map<String,String> parameter) {
+    protected static Uri toUri(String scheme, String host, List<Integer> mainList, List<Integer> exList, List<Integer> sideList, Map<String, String> parameter) {
         Uri.Builder uri = Uri.parse(scheme + "://")
                 .buildUpon()
                 .authority(host);
         //.path(Constants.PATH_DECK);
-        if (parameter!=null){
-            for (Map.Entry<String,String> para:parameter.entrySet()){
-                uri.appendQueryParameter(para.getKey(),para.getValue());
+        if (parameter != null) {
+            for (Map.Entry<String, String> para : parameter.entrySet()) {
+                uri.appendQueryParameter(para.getKey(), para.getValue());
             }
         }
         uri.appendQueryParameter(QUERY_YGO_TYPE, ARG_DECK);
@@ -303,21 +303,19 @@ public class DADeckUtil {
 
     /**
      * 根据单张卡片信息转换为可读的卡密和数量，只有协议0在用
-     * @param m 协议0的单张卡片信息
-     * @param protocol  协议版本
-     * @return  卡片信息，元素0为卡密，元素1为卡片数量
+     *
+     * @param m        协议0的单张卡片信息
+     * @param protocol 协议版本
+     * @return 卡片信息，元素0为卡密，元素1为卡片数量
      */
     private static int[] toIdAndNum(String m, int protocol) {
         //元素0为卡密，元素1为卡片数量
         int[] idNum;
 
-        switch (protocol) {
-            case YGO_DECK_PROTOCOL_0:
-                idNum = toIdAndNum0(m);
-                break;
-            default:
-                idNum = toIdAndNum0(m);
-                break;
+        if (protocol == YGO_DECK_PROTOCOL_0) {
+            idNum = toIdAndNum0(m);
+        } else {
+            idNum = toIdAndNum0(m);
         }
         return idNum;
     }
@@ -376,7 +374,7 @@ public class DADeckUtil {
 
     private static String tobyte(List<Integer> ids, int typeNum) {
         String bytes = "";
-        if (ids==null)
+        if (ids == null)
             return bytes;
         for (int i = 0; i < ids.size(); i++) {
             Integer id = ids.get(i);
@@ -453,7 +451,6 @@ public class DADeckUtil {
     }
 
 
-
     private static int toId(String str, int version) {
         if (TextUtils.isEmpty(str)) return 0;
         try {
@@ -471,30 +468,30 @@ public class DADeckUtil {
     }
 
 
-
     private static byte[] toBytes(String bits) {
 
         int y = bits.length() % 8;
-        Log.e("Deck",bits.length()+"之前余数"+y);
+        Log.e("Deck", bits.length() + "之前余数" + y);
         if (y != 0)
-            bits = toNumLengthLast(bits, bits.length()+8 - y);
-        Log.e("Deck",bits.length()+"余数"+y);
-        byte[] bytes=new byte[bits.length()/8];
-        for (int i=0;i<bits.length()/8;i++) {
+            bits = toNumLengthLast(bits, bits.length() + 8 - y);
+        Log.e("Deck", bits.length() + "余数" + y);
+        byte[] bytes = new byte[bits.length() / 8];
+        for (int i = 0; i < bits.length() / 8; i++) {
             bytes[i] = (byte) Integer.valueOf(bits.substring(i * 8, i * 8 + 8), 2).intValue();
-            if (i<8){
-                Log.e("Deck",bits.substring(i*8,i*8+8)+" 字节 "+bytes[i] );
+            if (i < 8) {
+                Log.e("Deck", bits.substring(i * 8, i * 8 + 8) + " 字节 " + bytes[i]);
 
             }
         }
-        Log.e("Deck","二进制"+bits );
+        Log.e("Deck", "二进制" + bits);
         return bytes;
     }
 
     /**
      * 将数字转换为制定长度，不够前面添0
+     *
      * @param message 数字内容
-     * @param num 位数
+     * @param num     位数
      * @return 转换后的数字
      */
     private static String toNumLength(String message, int num) {
@@ -506,19 +503,21 @@ public class DADeckUtil {
 
     /**
      * 将数字转换为制定长度，不够后面添0
+     *
      * @param message 数字内容
-     * @param num 位数
+     * @param num     位数
      * @return 转换后的数字
      */
     private static String toNumLengthLast(String message, int num) {
         while (message.length() < num) {
-            message +="0";
+            message += "0";
         }
         return message;
     }
 
     /**
      * 将数组转换为制定长度，不够后面添0
+     *
      * @param nums
      * @param num
      * @return
@@ -529,15 +528,13 @@ public class DADeckUtil {
             nums = new String[num];
             for (int i = 0; i < num - bms.length; i++)
                 nums[i] = "0";
-            for (int i = 0; i < bms.length; i++)
-                nums[i + num - bms.length] = bms[i];
+            System.arraycopy(bms, 0, nums, 0 + num - bms.length, bms.length);
         }
         return nums;
     }
 
     /**
-     *
-     *解析卡密，做40进制残留的东西，用不上，目前直接16进制转换为10进制
+     * 解析卡密，做40进制残留的东西，用不上，目前直接16进制转换为10进制
      */
     @Deprecated
     private static int unId(String id) {

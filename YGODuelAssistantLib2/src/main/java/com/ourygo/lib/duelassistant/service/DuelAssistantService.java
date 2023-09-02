@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-
 import com.ourygo.lib.duelassistant.R;
 import com.ourygo.lib.duelassistant.listener.OnDuelAssistantListener;
 import com.ourygo.lib.duelassistant.util.ClipManagement;

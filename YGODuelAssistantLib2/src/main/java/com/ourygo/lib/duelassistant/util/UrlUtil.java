@@ -3,6 +3,7 @@ package com.ourygo.lib.duelassistant.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Create By feihua  On 2021/9/29
@@ -17,7 +18,7 @@ public class UrlUtil {
             return "";
         }
         try {
-            String str = new String(paramString.getBytes(), "UTF-8");
+            String str = new String(paramString.getBytes(), StandardCharsets.UTF_8);
             str = URLEncoder.encode(str, "UTF-8");
             return str;
         } catch (Exception localException) {
@@ -33,7 +34,7 @@ public class UrlUtil {
             return "";
         }
         try {
-            String url = new String(paramString.getBytes(), "UTF-8");
+            String url = new String(paramString.getBytes(), StandardCharsets.UTF_8);
             url = URLDecoder.decode(url, "UTF-8");
             return url;
         } catch (UnsupportedEncodingException e) {

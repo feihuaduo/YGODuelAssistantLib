@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DuelAssistantManagement implements OnClipChangedListener {
     private static final DuelAssistantManagement ourInstance = new DuelAssistantManagement();
-    private List<OnDuelAssistantListener> onDuelAssistantListenerList;
+    private final List<OnDuelAssistantListener> onDuelAssistantListenerList;
     private ClipManagement clipManagement;
     //卡查内容
     private String cardSearchMessage = "";
@@ -216,7 +216,6 @@ public class DuelAssistantManagement implements OnClipChangedListener {
             }
         });
     }
-
 
 
     @Override
