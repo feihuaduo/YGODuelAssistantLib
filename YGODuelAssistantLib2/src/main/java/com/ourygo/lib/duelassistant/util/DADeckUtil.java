@@ -109,12 +109,17 @@ public class DADeckUtil {
         String[] mains, extras, sides;
         try {
 
-            URL url;
             switch (version) {
                 case YGO_DECK_PROTOCOL_0:
                     main = uri.getQueryParameter(QUERY_MAIN_ALL);
                     extra = uri.getQueryParameter(QUERY_EXTRA_ALL);
                     side = uri.getQueryParameter(QUERY_SIDE_ALL);
+                    if (TextUtils.isEmpty(main)
+                            || TextUtils.isEmpty(extra)
+                            || TextUtils.isEmpty(side)) {
+                        onDeDeckListener.onDeDeck(uri, mainlist, extraList, sideList, true, "未识别到卡组码");
+                        return;
+                    }
 
                     mains = main.split(CARD_DIVIDE_ID);
                     mList.addAll(Arrays.asList(mains));
