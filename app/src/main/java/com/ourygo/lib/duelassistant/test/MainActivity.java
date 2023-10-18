@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String message = editText.getText().toString().trim();
-                        YGODAUtil.deDeckListener(message, true, (uri, mainList, exList, sideList, isCompleteDeck, exception) -> {
+                        YGODAUtil.deDeckListener(message, (uri, mainList, exList, sideList, isCompleteDeck, exception) -> {
                             if (!TextUtils.isEmpty(exception)) {
                                 show("解析失败：" + exception);
                                 return;

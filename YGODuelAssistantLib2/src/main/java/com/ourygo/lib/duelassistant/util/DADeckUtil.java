@@ -79,7 +79,7 @@ public class DADeckUtil {
                 sideList.add(id);
             }
         }
-        onDeDeckListener.onDeDeck(null, mainlist, extraList, sideList, false, null);
+        onDeDeckListener.onDeDeck(null, mainlist, extraList, sideList, true, null);
     }
 
     protected static void deDeckListener(Uri uri, OnDeDeckListener onDeDeckListener) {
